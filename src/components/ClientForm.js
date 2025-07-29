@@ -1,78 +1,94 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
+import axios from "../api/axios";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const ClientForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
+const AddClient = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    company: "",
   });
+  const [error, setError] = useState("");
+  const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  // If editing, pre-fill the form with initial data
-  useEffect(() => {
-    if (initialData) {
-      setFormData(initialData);
-    }
-  }, [initialData]);
-
-  // Handle form input changes
+  // Handle input changes
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
-    }));
+    });
   };
 
-  const handleSubmit = (e) => {
+  // Submit form to backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+
+    try {
+      await axios.post("/clients/create", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      navigate("/dashboard/clients"); // Go back to client dashboard
+    } catch (err) {
+      console.error(err);
+      setError("Failed to add client");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Full Name"
-        className="w-full p-2 border rounded"
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Email"
-        className="w-full p-2 border rounded"
-        required
-      />
-      <input
-        type="text"
-        name="phone"
-        value={formData.phone}
-        onChange={handleChange}
-        placeholder="Phone"
-        className="w-full p-2 border rounded"
-      />
-      <input
-        type="text"
-        name="company"
-        value={formData.company}
-        onChange={handleChange}
-        placeholder="Company"
-        className="w-full p-2 border rounded"
-      />
+    <div className="max-w-md mx-auto mt-8 p-4 border rounded shadow">
+      <h2 className="text-2xl font-bold mb-4">Add Client</h2>
 
-      <button
-        type="submit"
-        className="bg-blue-600 text-white py-2 px-4 rounded"
-      >
-        {isEditing ? "Update Client" : "Add Client"}
-      </button>
-    </form>
+      {error && <p className="text-red-500 mb-2">{error}</p>}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block mb-1 font-medium">Client Name</label>
+          <input
+            name="name"
+            type="text"
+            required
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">Email</label>
+          <input
+            name="email"
+            type="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">Phone</label>
+          <input
+            name="phone"
+            type="tel"
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Save Client
+        </button>
+      </form>
+    </div>
   );
 };
 
-export default ClientForm;
+export default AddClient;

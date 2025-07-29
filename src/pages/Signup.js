@@ -9,6 +9,7 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "admin",
   });
 
   // Local state for errors/success messages
@@ -99,6 +100,19 @@ const Signup = () => {
               className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-400"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Role</label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-400"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
 
           <button
