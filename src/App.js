@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Home from "./pages/Home";
-// import Login from "./pages/Login";
+import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-// import ClientDashboard from "./pages/ClientDashboard";
+import ClientDashboard from "./pages/ClientDashboard";
 // import ProjectDashboard from "./pages/ProjectDashboard";
 // import AddClient from "./pages/AddClient";
 // import EditClient from "./pages/EditClient";
@@ -15,10 +15,10 @@ function App() {
     <Router>
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/clients" element={<ClientDashboard />} />
-        <Route path="/clients/add" element={<AddClient />} />
+        <Route path="/clients" element={<ClientDashboard />} />
+        {/* <Route path="/clients/add" element={<AddClient />} />
         <Route path="/clients/edit/:id" element={<EditClient />} />
         <Route path="/clients/view/:id" element={<ClientProfile />} />
         <Route path="/projects" element={<ProjectDashboard />} />

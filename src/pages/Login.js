@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../api/axios";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import axios from "../api/axios"; // this should point to your base axios config
 
-const Signup = () => {
-  // Local state for form input
+const Login = () => {
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
-  // Local state for errors/success messages
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -23,46 +22,31 @@ const Signup = () => {
     }));
   };
 
-  // Handle form submission
+  // Handle form submit
   const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page reload
+    e.preventDefault();
 
     try {
-      const res = await axios.post("/auth/sign-up", formData);
+      const res = await axios.post("/auth/login", formData);
 
-      // Save JWT token in localStorage
-      localStorage.setItem("token", res.data.token);
+      // Store JWT token
+      login(res.data.token);
 
-      // Redirect to client dashboard
-      navigate("/login");
+      // Redirect to Client Dashboard
+      navigate("/clients");
     } catch (err) {
-      // Show error message from server or generic one
-      setError(err.response?.data?.message || "Signup failed.");
+      setError(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">
-          Create Account
-        </h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
 
         {error && <div className="mb-4 text-red-600">{error}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-400"
-              required
-            />
-          </div>
-
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
             <input
@@ -87,25 +71,11 @@ const Signup = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-400"
-              required
-            />
-          </div>
-
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
           >
-            Sign Up
+            Login
           </button>
         </form>
       </div>
@@ -113,4 +83,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
