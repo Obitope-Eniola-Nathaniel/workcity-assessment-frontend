@@ -6,13 +6,13 @@ This is the **frontend** application for the Workcity Full-Stack Developer Asses
 
 ##  Features
 
-- ✅ Login / Signup (JWT Auth)
-- ✅ AuthContext for token sharing across components
-- ✅ Client Dashboard (View, Add, Edit, Delete)
-- ✅ Project Dashboard (View, Add, Edit, Delete)
-- ✅ View Projects under a specific client
-- ✅ Fully responsive UI using Tailwind CSS
-- ✅ Route protection for authenticated views
+- Login / Signup (JWT Auth)
+- AuthContext for token sharing across components
+- Client Dashboard (View, Add, Edit, Delete)
+- Project Dashboard (View, Add, Edit, Delete)
+- View Projects under a specific client
+- Fully responsive UI using Tailwind CSS
+- Route protection for authenticated views
 
 ---
 
@@ -48,7 +48,7 @@ Frontend will be live at: `http://localhost:3000`
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```bash
 ├── public/
@@ -66,7 +66,7 @@ Frontend will be live at: `http://localhost:3000`
 ```
 
 ---
-## 🧠 Assumptions
+## Assumptions
 
 * The backend API is secured with JWT, and all private routes require a Bearer token.
 * The logged-in user is stored in context using React’s Context API.
