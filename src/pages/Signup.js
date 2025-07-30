@@ -27,6 +27,7 @@ const Signup = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent page reload
+    console.log("Submitted data:", formData);
 
     try {
       const res = await axios.post("/auth/sign-up", formData);

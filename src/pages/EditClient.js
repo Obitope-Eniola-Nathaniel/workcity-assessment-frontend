@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ClientForm from "../components/ClientForm";
 import { AuthContext } from "../context/AuthContext";
@@ -13,7 +13,7 @@ const EditClient = () => {
   useEffect(() => {
     const fetchClient = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/clients/${id}`, {
+        const res = await axios.get(`/clients/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClient(res.data);
@@ -26,7 +26,7 @@ const EditClient = () => {
 
   const handleUpdate = async (formData) => {
     try {
-      await axios.put(`http://localhost:5000/api/clients/${id}`, formData, {
+      await axios.put(`/clients/${id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       navigate("/clients");
