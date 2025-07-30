@@ -16,7 +16,7 @@ const EditClient = () => {
         const res = await axios.get(`/clients/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setClient(res.data);
+        setClient(res.data.client);
       } catch (error) {
         console.error("Failed to fetch client", error);
       }

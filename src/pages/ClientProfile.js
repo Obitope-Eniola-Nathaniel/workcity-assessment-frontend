@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../api/axios";
+import { Link } from "react-router-dom";
 
 const ClientProfile = () => {
   const { id } = useParams(); // Grab client ID from URL
@@ -62,6 +63,12 @@ const ClientProfile = () => {
 
       {/* Projects List */}
       <div className="bg-white rounded-lg shadow-md p-6 border">
+        <Link
+          to={"/add-project/"}
+          className="text-indigo-600 hover:underline mr-4"
+        >
+          Add Project
+        </Link>
         <h3 className="text-xl font-semibold mb-4">Associated Projects</h3>
         {projects.length > 0 ? (
           <div className="space-y-4">
